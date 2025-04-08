@@ -1,11 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
+from typing import List, Dict
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-  return {"message": "Hello, World!"}
+@app.get("/items/")
+async def read_items(q: List[int] = Query([1, 2])):
+    return {"q": q}
 
-@app.get("/hello")
-def read_hello():
-  return {"message": "Hi, World!"}
+@app.post("/create-item/")
+async def create_item(item: Dict[str, int]):
+    return item
